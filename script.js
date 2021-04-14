@@ -27,13 +27,15 @@ let submissions = [
 ];
 
 //2 
-function addSubmission(array,newName, newScore, newDate) {
+function addSubmission(array, newName, newScore, newDate) {
+    let didPass;
     if (newScore >= 60) {
-    array.push({name: newName, score: newScore, date: newDate, passed: true});
+        didPass = true;
     } else {
-    array.push({name: newName, score: newScore, date: newDate, passed: false});
+        didPass = false;
     }
-} //this can't be the simplest way com back to this tomorrow
+    array.push({name: newName, score: newScore, date: newDate, passed: didPass});
+} 
 
 //3
 function deleteSubmissionByIndex (array, index) {
@@ -49,13 +51,10 @@ function deleteSubmissionByName (array, name) {
 
 //5
 function editSubmission (array, index, score) {
-    let submission = submissions[index];
+    let submission = array[index];
     submission.score = score;
-    if (score >= 60) {
-        submission.passed = true;
-    } else {
-        submission.passed = false;
-    }
+    submission.passed = score >= 60 ? true : false;
+        
     return submission;
 
 }
@@ -67,22 +66,22 @@ function findSubmissionByName(array, name) {
 
 //7
 function findLowestScore(array) {
-    let lowScore = submissions[0];
-  submissions.forEach (function(submission) {
+    let lowScore = array[0];
+  array.forEach (function(submission) {
     if (submission.score < lowScore.score) {
       lowScore = submission;
     }
   });
-  return lowScore.score;
+  return lowScore;
 }
 
 //8
 function findAverageScore(array) {
     let sumScores = 0; 
-  for (let submission of submissions) {
+  for (let submission of array) {
     sumScores += submission.score;
   }
-  return sumScores / submissions.length;
+  return sumScores / array.length;
 }
 
 //9
@@ -99,16 +98,17 @@ function filter90AndAbove(array) {
 
 
 
-console.log(submissions)
 
 addSubmission(submissions, "Jen", 30, "2021-01-01");
+addSubmission(submissions, "Jenn", 70, "2021-01-01");
+
 deleteSubmissionByIndex (submissions, 4);
 deleteSubmissionByName (submissions, "Jill")
-editSubmission (submissions, 2, 61);
 
 console.log(submissions)
 
-console.log(findSubmissionByName(submissions, "Jack"));
+console.log(editSubmission (submissions, 2, 61));
+console.log(findSubmissionByName(submissions, "Joe"));
 console.log(findLowestScore(submissions));
 console.log(findAverageScore(submissions));
 console.log(filterPassing(submissions));
