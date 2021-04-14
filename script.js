@@ -26,14 +26,14 @@ let submissions = [
 
 ];
 
-//2
+//2 
 function addSubmission(array,newName, newScore, newDate) {
     if (newScore >= 60) {
     array.push({name: newName, score: newScore, date: newDate, passed: true});
     } else {
     array.push({name: newName, score: newScore, date: newDate, passed: false});
     }
-}
+} //this can't be the simplest way com back to this tomorrow
 
 //3
 function deleteSubmissionByIndex (array, index) {
@@ -51,7 +51,11 @@ function deleteSubmissionByName (array, name) {
 function editSubmission (array, index, score) {
     let submission = submissions[index];
     submission.score = score;
-    
+    if (score >= 60) {
+        submission.passed = true;
+    } else {
+        submission.passed = false;
+    }
     return submission;
 
 }
@@ -63,30 +67,54 @@ function findSubmissionByName(array, name) {
 
 //7
 function findLowestScore(array) {
-    
+    let lowScore = submissions[0];
+  submissions.forEach (function(submission) {
+    if (submission.score < lowScore.score) {
+      lowScore = submission;
+    }
+  });
+  return lowScore.score;
 }
 
 //8
 function findAverageScore(array) {
-    
+    let sumScores = 0; 
+  for (let submission of submissions) {
+    sumScores += submission.score;
+  }
+  return sumScores / submissions.length;
 }
 
 //9
-function filterPassin(array) {
-    
+function filterPassing(array) {
+    return array.filter((submission) => submission.passed);
 }
 
 
 //10
 function filter90AndAbove(array) {
-    
+    return array.filter((submission) => submission.score >= 90);
 }
 
 
 
 
-console.log(editSubmission(submissions, 2, 2));
-console.log(submissions);
+console.log(submissions)
+
+addSubmission(submissions, "Jen", 30, "2021-01-01");
+deleteSubmissionByIndex (submissions, 4);
+deleteSubmissionByName (submissions, "Jill")
+editSubmission (submissions, 2, 61);
+
+console.log(submissions)
+
+console.log(findSubmissionByName(submissions, "Jack"));
+console.log(findLowestScore(submissions));
+console.log(findAverageScore(submissions));
+console.log(filterPassing(submissions));
+console.log(filter90AndAbove(submissions));
+
+
 
 
 
